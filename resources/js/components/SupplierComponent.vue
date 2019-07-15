@@ -2,7 +2,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-5">
-                <div class="card bg-light mb-3" style="max-width: 18rem;">
+                <div class="card border-dark bg-light mb-3" style="max-width: 18rem;">
                     <div class="card-header">Supplier </div>
                     <div class="card-body">
                         <h5 class="card-title">create new supplier</h5>
@@ -12,6 +12,11 @@
                             <div class="form-group">
                                 <label>Supplier Name: </label>
                                 <input type="text" class="form-control" placeholder="Name" v-model="supplier.name">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Supplier ID: </label>
+                                <input type="text" class="form-control" placeholder="Name" v-model="supplier.supplier_id">
                             </div>
 
                             <button type="submit" class="btn btn-light col-md-6 btn-block">Save</button>
@@ -25,7 +30,7 @@
                 <div class="row justify-content-center">
                     <div class="card-group">
                         <div v-for="supplier in suppliers" v-bind:key="supplier.supplier_id" class="col-md-6">
-                            <div class="card ">
+                            <div class="card border-dark" style="background-color: #d1ecf1;">
                                 <div class="card-header">
                                     {{ supplier.name }}}
                                 </div>
@@ -95,13 +100,8 @@
             addSupplier() {
                 if (this.edit === false) {
                     // Add
-                    fetch('api/suppliers', {
-                        method: 'post',
-                        body: JSON.stringify(this.supplier),
-                        headers: {
-                            'content-type': 'application/json'
-                        }
-                    }).then(handleErrors)
+                    axios.post('api/suppliers', this.supplier)
+                        .then(handleErrors)
                         .then(res => res.json())
                         .then(data => {
                             this.clearForm();
@@ -131,12 +131,14 @@
                 this.edit = true;
                 this.supplier.name = supplier.name;
                 this.supplier.supplier_id = supplier.supplier_id;
+                this.supplier_id = supplier.supplier_id;
 
             },
             clearForm() {
                 this.edit = false;
                 this.supplier.supplier_id = null;
                 this.supplier.name = null;
+                this.supplier_id = null;
             }
         },
         mounted() {

@@ -1791,6 +1791,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 function handleErrors(response) {
   if (!response.ok) {
     throw Error(response.statusText);
@@ -1806,7 +1816,8 @@ function handleErrors(response) {
       orders: [],
       order: {
         order_id: '',
-        name: ''
+        headquarter_id: '',
+        order_date: ''
       },
       order_id: null,
       pagination: {},
@@ -1834,7 +1845,7 @@ function handleErrors(response) {
       }).then(function (res) {
         return res.json();
       }).then(function (res) {
-        alert("Order ".concat(res.data.name, " deleted successful"));
+        alert("Order ".concat(res.data.order_id, " deleted successful"));
 
         _this2.fetchOrders();
       })["catch"](function (err) {
@@ -1888,13 +1899,15 @@ function handleErrors(response) {
     },
     editOrder: function editOrder(order) {
       this.edit = true;
-      this.order.name = order.name;
       this.order.order_id = order.order_id;
+      this.order.order_date = order.order_date;
+      this.order.headquarter_id = order.headquarter_id;
     },
     clearForm: function clearForm() {
       this.edit = false;
       this.order.order_id = null;
-      this.order.name = null;
+      this.order.order_date = null;
+      this.order.headquarter_id = null;
     }
   },
   mounted: function mounted() {
@@ -1913,7 +1926,6 @@ function handleErrors(response) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
 //
 //
 //
@@ -2063,13 +2075,15 @@ function handleErrors(response) {
     },
     editProduct: function editProduct(product) {
       this.edit = true;
-      this.product.name = product.name;
       this.product.product_id = product.product_id;
+      this.product.supplier_id = product.supplier_id;
+      this.product_id = product.product_id;
     },
     clearForm: function clearForm() {
       this.edit = false;
       this.product.product_id = null;
-      this.product.name = null;
+      this.product.supplier_id = null;
+      this.product_id = null;
     }
   },
   mounted: function mounted() {
@@ -2088,6 +2102,11 @@ function handleErrors(response) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2193,13 +2212,7 @@ function handleErrors(response) {
 
       if (this.edit === false) {
         // Add
-        fetch('api/suppliers', {
-          method: 'post',
-          body: JSON.stringify(this.supplier),
-          headers: {
-            'content-type': 'application/json'
-          }
-        }).then(handleErrors).then(function (res) {
+        axios.post('api/suppliers', this.supplier).then(handleErrors).then(function (res) {
           return res.json();
         }).then(function (data) {
           _this3.clearForm();
@@ -2235,11 +2248,13 @@ function handleErrors(response) {
       this.edit = true;
       this.supplier.name = supplier.name;
       this.supplier.supplier_id = supplier.supplier_id;
+      this.supplier_id = supplier.supplier_id;
     },
     clearForm: function clearForm() {
       this.edit = false;
       this.supplier.supplier_id = null;
       this.supplier.name = null;
+      this.supplier_id = null;
     }
   },
   mounted: function mounted() {
@@ -37568,11 +37583,11 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass: "card bg-light mb-3",
+            staticClass: "card border-dark bg-light mb-3",
             staticStyle: { "max-width": "18rem" }
           },
           [
-            _c("div", { staticClass: "card-header" }, [_vm._v("Order ")]),
+            _c("div", { staticClass: "card-header" }, [_vm._v("Order")]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
               _c("h5", { staticClass: "card-title" }, [
@@ -37607,26 +37622,82 @@ var render = function() {
                 },
                 [
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", [_vm._v("Order Name: ")]),
+                    _c("label", [_vm._v("Order Id: ")]),
                     _vm._v(" "),
                     _c("input", {
                       directives: [
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.order.name,
-                          expression: "order.name"
+                          value: _vm.order.order_id,
+                          expression: "order.order_id"
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { type: "text", placeholder: "Name" },
-                      domProps: { value: _vm.order.name },
+                      attrs: { type: "text", placeholder: "Order ID" },
+                      domProps: { value: _vm.order.order_id },
                       on: {
                         input: function($event) {
                           if ($event.target.composing) {
                             return
                           }
-                          _vm.$set(_vm.order, "name", $event.target.value)
+                          _vm.$set(_vm.order, "order_id", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Order Date: ")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.order.order_date,
+                          expression: "order.order_date"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "date", placeholder: "Date" },
+                      domProps: { value: _vm.order.order_date },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.order, "order_date", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Headquarters: ")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.order.headquarter_id,
+                          expression: "order.headquarter_id"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", placeholder: "Headquarters" },
+                      domProps: { value: _vm.order.headquarter_id },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.order,
+                            "headquarter_id",
+                            $event.target.value
+                          )
                         }
                       }
                     })
@@ -37670,23 +37741,21 @@ var render = function() {
                 "div",
                 { key: order.order_id, staticClass: "col-md-6" },
                 [
-                  _c("div", { staticClass: "card " }, [
+                  _c("div", { staticClass: "card border-dark" }, [
                     _c("div", { staticClass: "card-header" }, [
                       _vm._v(
-                        "\n                                " +
-                          _vm._s(order.name) +
-                          "}\n                            "
+                        "\n                                Order " +
+                          _vm._s(order.id) +
+                          "\n                            "
                       )
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "card-body" }, [
-                      _vm._v(
-                        "\n                                " +
-                          _vm._s(order.name) +
-                          "} " +
-                          _vm._s(order.order_id) +
-                          "\n                            "
-                      )
+                      _c("p", [_vm._v(" Order Date: " + _vm._s(order.date))]),
+                      _vm._v(" "),
+                      _c("p", [
+                        _vm._v("HeadQuarters: " + _vm._s(order.order_id))
+                      ])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "card-footer" }, [
@@ -37902,13 +37971,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "card-body" }, [
                       _vm._v(
-                        "\n                                product_id: " +
-                          _vm._s(product.product_id) +
-                          " "
-                      ),
-                      _c("br"),
-                      _vm._v(
-                        "\n                                " +
+                        "\n                                supplier_id: " +
                           _vm._s(product.supplier_id) +
                           "\n                            "
                       )
@@ -37980,7 +38043,7 @@ var render = function() {
         _c(
           "div",
           {
-            staticClass: "card bg-light mb-3",
+            staticClass: "card border-dark bg-light mb-3",
             staticStyle: { "max-width": "18rem" }
           },
           [
@@ -38044,6 +38107,36 @@ var render = function() {
                     })
                   ]),
                   _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Supplier ID: ")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.supplier.supplier_id,
+                          expression: "supplier.supplier_id"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", placeholder: "Name" },
+                      domProps: { value: _vm.supplier.supplier_id },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.supplier,
+                            "supplier_id",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
                   _c(
                     "button",
                     {
@@ -38082,53 +38175,60 @@ var render = function() {
                 "div",
                 { key: supplier.supplier_id, staticClass: "col-md-6" },
                 [
-                  _c("div", { staticClass: "card " }, [
-                    _c("div", { staticClass: "card-header" }, [
-                      _vm._v(
-                        "\n                                " +
-                          _vm._s(supplier.name) +
-                          "}\n                            "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "card-body" }, [
-                      _vm._v(
-                        "\n                                " +
-                          _vm._s(supplier.name) +
-                          "} " +
-                          _vm._s(supplier.supplier_id) +
-                          "\n                            "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "card-footer" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-info",
-                          on: {
-                            click: function($event) {
-                              return _vm.editSupplier(supplier)
-                            }
-                          }
-                        },
-                        [_vm._v("Edit")]
-                      ),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "card border-dark",
+                      staticStyle: { "background-color": "#d1ecf1" }
+                    },
+                    [
+                      _c("div", { staticClass: "card-header" }, [
+                        _vm._v(
+                          "\n                                " +
+                            _vm._s(supplier.name) +
+                            "}\n                            "
+                        )
+                      ]),
                       _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-danger",
-                          on: {
-                            click: function($event) {
-                              return _vm.deleteSupplier(supplier)
+                      _c("div", { staticClass: "card-body" }, [
+                        _vm._v(
+                          "\n                                " +
+                            _vm._s(supplier.name) +
+                            "} " +
+                            _vm._s(supplier.supplier_id) +
+                            "\n                            "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "card-footer" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-info",
+                            on: {
+                              click: function($event) {
+                                return _vm.editSupplier(supplier)
+                              }
                             }
-                          }
-                        },
-                        [_vm._v("Delete")]
-                      )
-                    ])
-                  ])
+                          },
+                          [_vm._v("Edit")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger",
+                            on: {
+                              click: function($event) {
+                                return _vm.deleteSupplier(supplier)
+                              }
+                            }
+                          },
+                          [_vm._v("Delete")]
+                        )
+                      ])
+                    ]
+                  )
                 ]
               )
             }),

@@ -39,19 +39,15 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-
-        $request->validate([
-            'supplier_id'=> 'integer',
-            'name'=>'required',
-        ]);
-        $supplier = Supplier::findOrFail($request->supplier_id) || new Supplier;
-
+        if(!is_null($request->supplier_id))
+        $supplier = new Supplier;
         $supplier->supplier_id = $request->input('supplier_id');
         $supplier->name = $request->input('name');
 
         if ($supplier->save()) {
-            return new SupplierResource($supplier);
+            return new SupplierResource(Supplier::find($request->supplier_id));
         }
+
 
     }
 
@@ -89,14 +85,14 @@ class SupplierController extends Controller
     public function update(Request $request, $supplier_id)
     {
         $request->validate([
-            'supplier_id'=> 'required|integer',
-            'name'=>'required',
+            'supplier_id' => 'required|integer',
+            'name' => 'required',
         ]);
 
         $supplier = Supplier::find($supplier_id);
         $supplier->name = $request->get('name');
         if ($supplier->save()) {
-            return new SupplierResource($supplier);
+            return new SupplierResource(Supplier::find($supplier_id));
         }
     }
 

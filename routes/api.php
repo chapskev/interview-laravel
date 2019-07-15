@@ -13,24 +13,24 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/suppliers', 'SupplierController@index');
-Route::get('/suppliers/{supplier_id}', 'SupplierController@show');
-Route::post('/suppliers', 'SupplierController@store');
-Route::put('/suppliers', 'SupplierController@store');
-Route::delete('/suppliers/{supplier_id}', 'SupplierController@destroy');
+Route::get('suppliers', 'SupplierController@index');
+Route::get('suppliers/{supplier_id}', 'SupplierController@show');
+Route::any('suppliers', 'SupplierController@store');
+Route::put('suppliers', 'SupplierController@update');
+Route::delete('suppliers/{supplier_id}', 'SupplierController@destroy');
 
-Route::get('/orders', 'OrderController@index');
-Route::get('/orders/{id}', 'OrderController@show');
-Route::post('/orders', 'OrderController@store');
-Route::put('/orders', 'OrderController@store');
-Route::delete('/orders/{orders_id}', 'OrderController@destroy');
+Route::get('orders', 'OrderController@index');
+Route::get('orders/{id}', 'OrderController@show');
+Route::post('orders', 'OrderController@store');
+Route::put('orders', 'OrderController@store');
+Route::delete('orders/{orders_id}', 'OrderController@destroy');
 
-Route::get('/products', 'ProductController@index');
-Route::get('/products/{id}', 'ProductController@show');
-Route::post('/products', 'ProductController@store');
-Route::put('/products', 'ProductController@store');
-Route::delete('/products/{product_id}', 'ProductController@destroy');
+Route::get('products', 'ProductController@index');
+Route::get('products/{id}', 'ProductController@show');
+Route::post('products', 'ProductController@store');
+Route::put('products', 'ProductController@store');
+Route::delete('products/{product_id}', 'ProductController@destroy');

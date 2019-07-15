@@ -17,18 +17,18 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"
           integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
 </head>
-<body>
+<body style="background: #dedede;">
 <div class="container">
     <div id="app">
-        <section style="background-color: #fefefe;padding: 10px; ">
+        <section style="background-color: #fefefe;padding: 20px; ">
             <Supplier></Supplier>
         </section>
         <hr/>
-        <section style="background-color: #d1ecf1;padding: 10px; ">
+        <section style="background-color: #d1ecf1;padding: 20px; ">
             <Product></Product>
         </section>
         <hr/>
-        <section style="background-color: #fefefe;padding: 10px; ">
+        <section style="background-color: #fefefe;padding: 20px; ">
             <Order></Order>
         </section>
 

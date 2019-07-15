@@ -34,8 +34,7 @@
                                     product_id:    {{ product.product_id }}
                                 </div>
                                 <div class="card-body">
-                                    product_id: {{ product.product_id }} <br>
-                                    {{ product.supplier_id}}
+                                    supplier_id: {{ product.supplier_id}}
                                 </div>
                                 <div class="card-footer">
                                     <button @click="editProduct(product)" class="btn btn-info">Edit</button>
@@ -134,14 +133,16 @@
             },
             editProduct(product) {
                 this.edit = true;
-                this.product.name = product.name;
                 this.product.product_id = product.product_id;
+                this.product.supplier_id = product.supplier_id;
+                this.product_id = product.product_id;
 
             },
             clearForm() {
                 this.edit = false;
                 this.product.product_id = null;
-                this.product.name = null;
+                this.product.supplier_id = null;
+                this.product_id = null;
             }
         },
         mounted() {

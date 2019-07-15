@@ -2,16 +2,25 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-5">
-                <div class="card bg-light mb-3" style="max-width: 18rem;">
-                    <div class="card-header">Order </div>
+                <div class="card border-dark bg-light mb-3" style="max-width: 18rem;">
+                    <div class="card-header">Order</div>
                     <div class="card-body">
                         <h5 class="card-title">create new order</h5>
                         <button @click="clearForm()" class="btn btn-warning">New</button>
-                        <hr />
-                        <form  @submit.prevent="addOrder" class="mb-3">
+                        <hr/>
+                        <form @submit.prevent="addOrder" class="mb-3">
                             <div class="form-group">
-                                <label>Order Name: </label>
-                                <input type="text" class="form-control" placeholder="Name" v-model="order.name">
+                                <label>Order Id: </label>
+                                <input type="text" class="form-control" placeholder="Order ID" v-model="order.order_id">
+                            </div>
+                            <div class="form-group">
+                                <label>Order Date: </label>
+                                <input type="date" class="form-control" placeholder="Date" v-model="order.order_date">
+                            </div>
+                            <div class="form-group">
+                                <label>Headquarters: </label>
+                                <input type="text" class="form-control" placeholder="Headquarters"
+                                       v-model="order.headquarter_id">
                             </div>
 
                             <button type="submit" class="btn btn-light col-md-6 btn-block">Save</button>
@@ -25,12 +34,13 @@
                 <div class="row justify-content-center">
                     <div class="card-group">
                         <div v-for="order in orders" v-bind:key="order.order_id" class="col-md-6">
-                            <div class="card ">
+                            <div class="card border-dark">
                                 <div class="card-header">
-                                    {{ order.name }}}
+                                    Order {{ order.id }}
                                 </div>
                                 <div class="card-body">
-                                    {{ order.name }}} {{ order.order_id}}
+                                    <p> Order Date: {{ order.date }}</p>
+                                    <p>HeadQuarters: {{ order.order_id}}</p>
                                 </div>
                                 <div class="card-footer">
                                     <button @click="editOrder(order)" class="btn btn-info">Edit</button>
@@ -60,7 +70,8 @@
                 orders: [],
                 order: {
                     order_id: '',
-                    name: '',
+                    headquarter_id: '',
+                    order_date: '',
                 },
                 order_id: null,
                 pagination: {},
@@ -85,7 +96,7 @@
                         method: 'DELETE',
                     }).then(res => res.json())
                         .then(res => {
-                            alert(`Order ${res.data.name} deleted successful`);
+                            alert(`Order ${res.data.order_id} deleted successful`);
                             this.fetchOrders();
                         }).catch(err => {
                         console.log(err);
@@ -129,14 +140,17 @@
             },
             editOrder(order) {
                 this.edit = true;
-                this.order.name = order.name;
                 this.order.order_id = order.order_id;
+                this.order.order_date = order.order_date;
+                this.order.headquarter_id = order.headquarter_id;
 
             },
             clearForm() {
                 this.edit = false;
                 this.order.order_id = null;
-                this.order.name = null;
+                this.order.order_date = null;
+                this.order.headquarter_id = null;
+
             }
         },
         mounted() {
